@@ -1,0 +1,24 @@
+[role='button'] {
+  cursor: pointer;
+  outline: none;
+}
+
+.tableCategories {
+  padding: 14px 30px;
+  border: solid 1px #cccccc;
+  min-height: 63vh;
+
+  .table {
+    margin-bottom: 0;
+
+    thead {
+      tr {
+        border-top: solid white;
+      }
+    }
+  }
+}
+
+.btn-del {
+  cursor: pointer;
+}

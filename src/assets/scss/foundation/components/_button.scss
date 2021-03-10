@@ -1,0 +1,12 @@
+.btnSlide {
+  background-color: none;
+  border: none;
+  font-size: 15px;
+  padding: 10px 0;
+  width: 100%;
+}
+
+.btnSlide-active {
+  background-color: $color_main;
+  color: white;
+}

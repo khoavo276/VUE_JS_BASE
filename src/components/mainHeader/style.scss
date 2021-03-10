@@ -1,0 +1,26 @@
+.mainHeader {
+  background-color: #55642c;
+  padding-top: 30px;
+  padding-bottom: 50px;
+  .title {
+    color: white;
+  }
+
+  .btn-add {
+    background-color: #55642c;
+    padding: 10px 50px;
+    border-radius: 50px;
+    border: solid 2px #dbe2bf;
+    outline: none;
+    color: white;
+  }
+
+  .btn-delete {
+    background-color: #dbe2bf;
+    padding: 10px 50px;
+    border-radius: 50px;
+    outline: none;
+    color: black;
+    border: none;
+  }
+}
