@@ -135,33 +135,18 @@ export default {
   methods: {
     addCategories() {
       if (this.validation) {
-        if (this.getAllCategories.length > 0) {
-          this.$store.commit("addCategories", {
-            id: this.getLastId + 1,
-            key: this.params.key,
-            name: this.params.name,
-            order: Number(this.params.order),
-            status: this.params.status
-          });
-          this.params.key = "";
-          this.params.name = "";
-          this.params.order = "";
-          this.params.status = true;
-          this.$bvModal.hide(this.type);
-        } else {
-          this.$store.commit("addCategories", {
-            id: 0,
-            key: this.params.key,
-            name: this.params.name,
-            order: this.params.order,
-            status: this.params.status
-          });
-          this.params.key = "";
-          this.params.name = "";
-          this.params.order = "";
-          this.params.status = true;
-          this.$bvModal.hide(this.type);
-        }
+        this.$store.commit("addCategories", {
+          id: 0,
+          key: this.params.key,
+          name: this.params.name,
+          order: this.params.order,
+          status: this.params.status
+        });
+        this.params.key = "";
+        this.params.name = "";
+        this.params.order = "";
+        this.params.status = true;
+        this.$bvModal.hide(this.type);
       }
     },
     editCategories() {

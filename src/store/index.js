@@ -11,7 +11,7 @@ export default new Vuex.Store({
     selectId: "",
     selectItem: [],
     selected: [],
-    loading: true
+    loading: false
   },
   getters: {
     getLastId: state => {
@@ -24,38 +24,62 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    addCategories(state, item) {
-      state.categories.push(item);
+    async addCategories(state, item) {
+      try {
+        const data = await CATEGORIES.ADD(item);
+        if (data) {
+          state.categories.push(data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
-    delCategories(state, id) {
-      state.categories = state.categories.filter(item => item.id != id);
+    async delCategories(state, id) {
+      try {
+        const data = await CATEGORIES.DELETE(id);
+        if (data) {
+          state.categories = state.categories.filter(item => item.id != id);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
     selectCategories(state, id) {
       state.selectId = id;
       let list = [...state.categories];
       state.selectItem = list.filter(item => item.id == id);
     },
-    editCategories(state, item) {
-      let list = [...state.categories];
-      let index = list.findIndex(x => x.id === item.id);
-      list[index] = item;
-      state.categories = list;
+    async editCategories(state, item) {
+      try {
+        const data = await CATEGORIES.EDIT(item);
+        if (data) {
+          let list = [...state.categories];
+          let index = list.findIndex(x => x.id === item.id);
+          list[index] = item;
+          state.categories = list;
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
-    delListCategories(state) {
+    async delListCategories(state) {
       if (state.selected.length > 0) {
         state.selected.map(item => {
-          state.categories = state.categories.filter(i => i.id != item);
+          const data = CATEGORIES.DELETE(item);
+          if (data) {
+            state.categories = state.categories.filter(i => i.id != item);
+          }
         });
       }
     },
     async getCategories(state) {
+      state.loading = true;
       try {
         const data = await CATEGORIES.GET_LIST();
         if (data) {
           state.categories = data;
         }
-        console.log("data :", data);
-        console.log("state: ", state.categories);
+        state.loading = false;
       } catch (error) {
         console.log(error);
       }

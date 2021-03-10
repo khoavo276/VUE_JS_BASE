@@ -11,9 +11,39 @@ export const CATEGORIES = {
     );
     if (result) return result;
   },
-  async CREATE() {
+  async EDIT(item = {}) {
+    const result = callApi(
+      {
+        key: item.key,
+        name: item.name,
+        status: item.status,
+        order: item.order
+      },
+      {
+        endpoint: `categories/${item.id}`,
+        method: "PUT"
+      }
+    );
+    if (result) return result;
+  },
+  async DELETE(id = "") {
     const result = callApi(
       {},
+      {
+        endpoint: `categories/${id}`,
+        method: "DELETE"
+      }
+    );
+    if (result) return result;
+  },
+  async ADD(item = {}) {
+    const result = callApi(
+      {
+        key: item.key,
+        name: item.name,
+        status: item.status,
+        order: item.order
+      },
       {
         endpoint: `categories`,
         method: "POST"

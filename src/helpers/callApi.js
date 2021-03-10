@@ -1,7 +1,7 @@
 // import { getConfig } from '../env';
 import axios from "axios";
 
-const urlApi = "https://6048759bb801a40017ccdcc8.mockapi.io/api/v1/";
+const urlApi = "https://6048759bb801a40017ccdcc8.mockapi.io/api/v1";
 
 export const getHeader = () => {
   let token = window.localStorage.getItem("token");

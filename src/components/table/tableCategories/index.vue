@@ -13,6 +13,7 @@
         </tr>
       </thead>
       <tbody>
+        <Loading :loading="loading" />
         <Item
           v-for="(item, index) in getListOrder"
           :key="index"
@@ -25,6 +26,7 @@
 
 <script>
 import Item from "@/components/table/tableCategories/item/index.vue";
+import Loading from "@/components/loading/index.vue";
 
 export default {
   name: "TableCategories",
@@ -34,7 +36,8 @@ export default {
     };
   },
   components: {
-    Item
+    Item,
+    Loading
   },
   computed: {
     categories() {
@@ -43,6 +46,9 @@ export default {
     getListOrder() {
       let list = [...this.$store.state.categories];
       return list.sort((a, b) => a.order - b.order);
+    },
+    loading() {
+      return this.$store.state.loading;
     }
   },
   methods: {
