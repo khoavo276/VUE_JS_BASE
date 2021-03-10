@@ -12,7 +12,7 @@
     </td>
     <td>{{ item.order }}</td>
     <td>
-      <div v-b-modal.modal-edit v-on:click="editCategorise(item.id)">
+      <div v-b-modal.EDIT v-on:click="editCategorise(item.id)">
         <img src="../../../../assets/images/edit.png" />
       </div>
     </td>
@@ -27,6 +27,7 @@
         :value="item.id"
         inline
         v-model="$store.state.selected"
+        size="lg"
       >
       </b-form-checkbox>
     </td>
@@ -35,18 +36,18 @@
 
 <script>
 export default {
-  name: 'Item',
+  name: "Item",
   props: {
     item: Object
   },
   methods: {
     delCategories(id) {
-      this.$store.commit('delCategories', id)
+      this.$store.commit("delCategories", id);
     },
     editCategorise(id) {
-      this.$store.commit('selectCategories', id)
+      this.$store.commit("selectCategories", id);
     }
   },
   computed: {}
-}
+};
 </script>

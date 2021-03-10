@@ -21,10 +21,10 @@
 
 <script>
 export default {
-  name: 'Header'
-}
+  name: "Header"
+};
 </script>
 
 <style lang="scss">
-@import './style.scss';
+@import "./style.scss";
 </style>

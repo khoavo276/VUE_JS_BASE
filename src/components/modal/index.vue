@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="modal-categories">
     <b-modal :id="type" :title="title">
       <b-form-group
         id="fieldset-key"
@@ -15,9 +15,6 @@
           v-model="params.key"
           :state="validationKey"
         ></b-form-input>
-        <!-- <b-form-invalid-feedback :state="validationKey">
-          Please input key
-        </b-form-invalid-feedback> -->
       </b-form-group>
       <b-form-group
         id="fieldset-name"
@@ -33,9 +30,6 @@
           v-model="params.name"
           :state="validationName"
         ></b-form-input>
-        <!-- <b-form-invalid-feedback :state="validationName">
-          Please input name
-        </b-form-invalid-feedback> -->
       </b-form-group>
       <b-form-group
         id="fieldset-status"
@@ -72,13 +66,23 @@
       </b-form-group>
 
       <template #modal-footer>
-        <div v-if="type === 'modal-add'">
-          <b-button size="sm" variant="success" @click="addCategories">
+        <div v-if="type === MODAL.ADD">
+          <b-button
+            class="btn-modal"
+            size="sm"
+            variant="success"
+            @click="addCategories"
+          >
             ADD
           </b-button>
         </div>
         <div v-else>
-          <b-button size="sm" variant="success" @click="editCategories">
+          <b-button
+            class="btn-modal"
+            size="sm"
+            variant="success"
+            @click="editCategories"
+          >
             SAVE
           </b-button>
         </div>
@@ -88,8 +92,10 @@
 </template>
 
 <script>
+import { MODAL } from "@/constants/constants.js";
+
 export default {
-  name: 'ModalAdd',
+  name: "ModalAdd",
   props: {
     title: String,
     type: String,
@@ -97,30 +103,31 @@ export default {
   },
   data() {
     return {
+      MODAL: MODAL,
       options: [
-        { value: true, text: 'Enable' },
-        { value: false, text: 'Disable' }
+        { value: true, text: "Enable" },
+        { value: false, text: "Disable" }
       ],
       params: {
-        id: '',
-        key: '',
-        name: '',
-        order: '',
+        id: "",
+        key: "",
+        name: "",
+        order: "",
         status: true
       },
-      oldOrder: ''
-    }
+      oldOrder: ""
+    };
   },
   watch: {
     data: {
       handler(val) {
-        if (this.type === 'modal-edit') {
-          this.params.id = val[0].id
-          this.params.key = val[0].key
-          this.params.name = val[0].name
-          this.params.order = String(val[0].order)
-          this.params.status = val[0].status
-          this.oldOrder = String(val[0].order)
+        if (this.type === MODAL.EDIT) {
+          this.params.id = val[0].id;
+          this.params.key = val[0].key;
+          this.params.name = val[0].name;
+          this.params.order = String(val[0].order);
+          this.params.status = val[0].status;
+          this.oldOrder = String(val[0].order);
         }
       }
     }
@@ -129,88 +136,88 @@ export default {
     addCategories() {
       if (this.validation) {
         if (this.getAllCategories.length > 0) {
-          this.$store.commit('addCategories', {
+          this.$store.commit("addCategories", {
             id: this.getLastId + 1,
             key: this.params.key,
             name: this.params.name,
             order: Number(this.params.order),
             status: this.params.status
-          })
-          this.params.key = ''
-          this.params.name = ''
-          this.params.order = ''
-          this.params.status = true
-          this.$bvModal.hide(this.type)
+          });
+          this.params.key = "";
+          this.params.name = "";
+          this.params.order = "";
+          this.params.status = true;
+          this.$bvModal.hide(this.type);
         } else {
-          this.$store.commit('addCategories', {
+          this.$store.commit("addCategories", {
             id: 0,
             key: this.params.key,
             name: this.params.name,
             order: this.params.order,
             status: this.params.status
-          })
-          this.params.key = ''
-          this.params.name = ''
-          this.params.order = ''
-          this.params.status = true
-          this.$bvModal.hide(this.type)
+          });
+          this.params.key = "";
+          this.params.name = "";
+          this.params.order = "";
+          this.params.status = true;
+          this.$bvModal.hide(this.type);
         }
       }
     },
     editCategories() {
       if (this.validation) {
-        this.$store.commit('editCategories', {
+        this.$store.commit("editCategories", {
           id: this.params.id,
           key: this.params.key,
           name: this.params.name,
           order: Number(this.params.order),
           status: this.params.status
-        })
-        this.$bvModal.hide(this.type)
+        });
+        this.$bvModal.hide(this.type);
       }
     },
     checkOrder() {
-      return !this.$store.getters.getItemByOrder(Number(this.params.order))
+      return !this.$store.getters.getItemByOrder(Number(this.params.order));
     }
   },
   computed: {
     getLastId() {
-      return this.$store.getters.getLastId
+      return this.$store.getters.getLastId;
     },
     getAllCategories() {
-      return this.$store.state.categories
+      return this.$store.state.categories;
     },
     validationKey() {
-      return this.params.key.length > 0
+      return this.params.key.length > 0;
     },
     validationName() {
-      return this.params.name.length > 0
+      return this.params.name.length > 0;
     },
     validationOrder() {
-      if (this.type === 'modal-add') {
+      if (this.type === MODAL.ADD) {
         return (
           !isNaN(this.params.order) &&
           this.params.order.length > 0 &&
           !this.$store.getters.getItemByOrder(Number(this.params.order))
-        )
+        );
       } else {
         if (this.oldOrder == Number(this.params.order)) {
-          return !isNaN(this.params.order) && this.params.order.length > 0
+          return !isNaN(this.params.order) && this.params.order.length > 0;
         } else
           return (
             !isNaN(this.params.order) &&
             this.params.order.length > 0 &&
             !this.$store.getters.getItemByOrder(Number(this.params.order))
-          )
+          );
       }
     },
     validation() {
-      return this.validationKey && this.validationName && this.validationOrder
+      return this.validationKey && this.validationName && this.validationOrder;
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
-@import './style.scss';
+@import "./style.scss";
 </style>

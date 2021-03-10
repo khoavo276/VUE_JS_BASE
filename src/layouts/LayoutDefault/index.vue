@@ -11,18 +11,18 @@
 </template>
 
 <script>
-import Header from '@/components/header/index.vue'
-import SlideLeft from '@/components/slideLeft/index.vue'
+import Header from "@/components/header/index.vue";
+import SlideLeft from "@/components/slideLeft/index.vue";
 
 export default {
-  name: 'LayoutDefault',
+  name: "LayoutDefault",
   components: {
     Header,
     SlideLeft
   }
-}
+};
 </script>
 
 <style lang="scss">
-@import './style.scss';
+@import "./style.scss";
 </style>
