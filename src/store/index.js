@@ -3,17 +3,15 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
+import { CATEGORIES } from "../constants/endponts";
+
 export default new Vuex.Store({
   state: {
-    categories: [
-      { id: 0, key: "games", name: "Games", status: true, order: 20 },
-      { id: 1, key: "defi", name: "Defi", status: false, order: 6 },
-      { id: 2, key: "khoa", name: "Khoa", status: false, order: 10 },
-      { id: 3, key: "thinh", name: "Thinh", status: true, order: 9 }
-    ],
+    categories: [],
     selectId: "",
     selectItem: [],
-    selected: []
+    selected: [],
+    loading: true
   },
   getters: {
     getLastId: state => {
@@ -48,6 +46,18 @@ export default new Vuex.Store({
         state.selected.map(item => {
           state.categories = state.categories.filter(i => i.id != item);
         });
+      }
+    },
+    async getCategories(state) {
+      try {
+        const data = await CATEGORIES.GET_LIST();
+        if (data) {
+          state.categories = data;
+        }
+        console.log("data :", data);
+        console.log("state: ", state.categories);
+      } catch (error) {
+        console.log(error);
       }
     }
   },

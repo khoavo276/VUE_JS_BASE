@@ -10,20 +10,24 @@
 </template>
 
 <script>
-import LayoutDefault from '@/layouts/LayoutDefault'
-import MainHeader from '@/components/mainHeader/index.vue'
-import Table from '@/components/table/tableCategories/index.vue'
+import LayoutDefault from "@/layouts/LayoutDefault";
+import MainHeader from "@/components/mainHeader/index.vue";
+import Table from "@/components/table/tableCategories/index.vue";
 
 export default {
-  name: 'Home',
+  name: "Categories",
   components: {
     LayoutDefault,
     MainHeader,
     Table
+  },
+  created() {
+    console.log("abc");
+    this.$store.commit("getCategories");
   }
-}
+};
 </script>
 
 <style lang="scss">
-@import './style.scss';
+@import "./style.scss";
 </style>
